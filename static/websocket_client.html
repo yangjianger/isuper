@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./jquery.js"></script>
+    <style>
+        #live_list{
+            position: relative;
+        }
+        #live_list li:before{
+            content: "";
+            width: 5px;
+            height: 20px;
+            background: red;
+            position: absolute;
+            margin-left: -13px;
+            margin-top: 14px;
+        }
+        #live_list li{
+            width: 100%;
+            height: 50px;
+            line-height: 50px;
+            background: #ccc;
+            list-style: none;
+            border-bottom: 1px solid #0c5460;
+            text-indent: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>test</h1>
+    <ul id="live_list"></ul>
+    <script>
+        var websocket = new WebSocket("ws://60.205.201.61:8811");
+
+        websocket.onopen  = function (ev) {
+            websocket.send("客户端数据");
+            console.log("链接成功-swoole" + websocket);
+        };
+
+        websocket.onmessage = function (ev) {
+            $("#live_list").append("<li>"+ ev.data +"<li>");
+            console.log("服务端数据是：" +  ev.data);
+        };
+
+        websocket.onclose = function (ev) {
+            console.log("swoole close");
+        };
+
+        websocket.onerror = function (ev) {
+            console.log("error: " + ev);
+        }
+
+    </script>
+</body>
+</html>
