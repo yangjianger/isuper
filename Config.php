@@ -43,11 +43,11 @@ class Config{
 
 		$config_arr = explode(".", $config_str);
 
-		if(!$config_arr[1]){
+		if(!isset($config_arr[1])){
 			return $all_config[$config_arr[0]] ? $all_config[$config_arr[0]] : array();
 		}
 
-		return $all_config[$config_arr[0]][$config_arr[1]] ? $all_config[$config_arr[0]][$config_arr[1]] : "";
+		return (isset($all_config[$config_arr[0]][$config_arr[1]]) && $all_config[$config_arr[0]][$config_arr[1]]) ? $all_config[$config_arr[0]][$config_arr[1]] : "";
 
 	}
 }
